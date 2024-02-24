@@ -60,10 +60,8 @@ function downloadSignature() {
             downloadSignatureAsImage(selectedFormat);
     }
 }
-
 function downloadSignatureAsImage(format) {
- 
-  
+   
     const dataURL = canvas.toDataURL(`image/${format}`);
     const link = document.createElement('a');
     link.href = dataURL;
@@ -74,17 +72,6 @@ function downloadSignatureAsImage(format) {
   ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
-
-ctx.fillStyle = 'white';
-ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-const dataURL = canvas.toDataURL(`image/${format}`);
-const link = document.createElement('a');
-link.href = dataURL;
-
-link.download = `signature.${format}`;
-link.click();
-
 
 function downloadSignatureAsPDF() {
     const signatureCanvas = document.getElementById('signatureCanvas');
