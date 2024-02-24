@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded', function () {
 const canvas = document.getElementById('signatureCanvas');
 const ctx = canvas.getContext('2d');
 let isDrawing = false;
@@ -182,3 +183,4 @@ function loadManualSignature(input) {
         reader.readAsDataURL(file);
     }
 }
+});
