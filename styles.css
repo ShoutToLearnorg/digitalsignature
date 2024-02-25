@@ -22,11 +22,13 @@
   justify-content: center; /* Center the canvas horizontally */
   align-items: center; /* Center the canvas vertically */
 }
-
+.inner-box {
+      border: 1px solid #000; /* Change color and width as needed */
+      padding: 10px; /* Add padding to create space between the borders */
+    }
 #signatureCanvas {
   touch-action: none;
   background-color: white;
-  border: 1px solid #000;
   display: block; /* Ensure the canvas is a block element */
   margin: auto; /* Center the canvas within its parent */
 }
