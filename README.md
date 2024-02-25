@@ -46,7 +46,8 @@ This project is licensed under the [MIT License](LICENSE).
 ## Author
 
 - **Ashis Srivastava**
-  - GitHub: [shouttolearnorg](https://github.com/shouttolearnorg)
+  - GitHub: [Ashish Srivastava](https://github.com/shouttolearnorg)
+  - LinkedIn: [Ashish Srivastava](https://www.linkedin.com/in/text-ashish/)
 
 ---
 
