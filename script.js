@@ -1,93 +1,122 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const canvas = document.getElementById('signatureCanvas');
-    const ctx = canvas.getContext('2d');
-    let isDrawing = false;
+const canvas = document.getElementById('signatureCanvas');
+const ctx = canvas.getContext('2d');
+let isDrawing = false;
 
-    resizeCanvas();
+resizeCanvas();
 
-    canvas.addEventListener('mousedown', startDrawing);
-    canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('mouseup', stopDrawing);
-    canvas.addEventListener('touchstart', startDrawing);
-    canvas.addEventListener('touchmove', draw);
-    canvas.addEventListener('touchend', stopDrawing);
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', stopDrawing);
+canvas.addEventListener('touchstart', startDrawing);
+canvas.addEventListener('touchmove', draw);
+canvas.addEventListener('touchend', stopDrawing);
 
-    window.addEventListener('resize', resizeCanvas);
+window.addEventListener('resize', resizeCanvas);
 
-    function startDrawing(e) {
-        isDrawing = true;
-        draw(e);
+function startDrawing(e) {
+    isDrawing = true;
+    draw(e);
+}
+
+function draw(e) {
+    if (!isDrawing) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX || e.touches[0].clientX) - rect.left;
+    const y = (e.clientY || e.touches[0].clientY) - rect.top;
+
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#000';
+
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+}
+
+function stopDrawing() {
+    isDrawing = false;
+    ctx.beginPath();
+}
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth * 0.8;
+    canvas.height = 200;
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+function downloadSignature() {
+    const formatSelect = document.getElementById('formatSelect');
+    const selectedFormat = formatSelect.value;
+
+    switch (selectedFormat) {
+        case 'pdf':
+            downloadSignatureAsPDF();
+            break;
+        default:
+            downloadSignatureAsImage(selectedFormat);
     }
+}
 
-    function draw(e) {
-        if (!isDrawing) return;
+function downloadSignatureAsImage(format) {
+ 
+  
+    const dataURL = canvas.toDataURL(`image/${format}`);
+    const link = document.createElement('a');
+    link.href = dataURL;
 
-        const rect = canvas.getBoundingClientRect();
-        const x = (e.clientX || e.touches[0].clientX) - rect.left;
-        const y = (e.clientY || e.touches[0].clientY) - rect.top;
+    link.download = `signature.${format}`;
+    link.click();
+  
+  ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
 
-        ctx.lineWidth = 2;
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = '#000';
 
-        ctx.lineTo(x, y);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-    }
 
-    function stopDrawing() {
-        isDrawing = false;
-        ctx.beginPath();
-    }
+function downloadSignatureAsPDF() {
+    const signatureCanvas = document.getElementById('signatureCanvas');
+    const signatureRect = signatureCanvas.getBoundingClientRect();
 
-    function resizeCanvas() {
-        const canvasSize = Math.min(window.innerWidth * 0.8, 400); // Set a maximum size of 400px for the canvas
-        canvas.width = canvasSize;
-        canvas.height = canvasSize;
-        ctx.fillStyle = 'white';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }
+    const tempCanvas = document.createElement('canvas');
+    const tempCtx = tempCanvas.getContext('2d');
 
-    function downloadSignature() {
-        const formatSelect = document.getElementById('formatSelect');
-        const selectedFormat = formatSelect.value;
+    tempCanvas.width = signatureRect.width;
+    tempCanvas.height = signatureRect.height;
 
-        switch (selectedFormat) {
-            case 'pdf':
-                downloadSignatureAsPDF();
-                break;
-            default:
-                downloadSignatureAsImage(selectedFormat);
-        }
-    }
+    const centerX = tempCanvas.width / 2;
+    const centerY = tempCanvas.height / 2;
 
-    function downloadSignatureAsImage(format) {
-        const dataURL = canvas.toDataURL(`image/${format}`);
-        const link = document.createElement('a');
-        link.href = dataURL;
+    tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
 
-        link.download = `signature.${format}`;
-        link.click();
+    tempCtx.drawImage(signatureCanvas, centerX - signatureRect.width / 2, centerY - signatureRect.height / 2);
 
-        ctx.fillStyle = 'white';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }
+    const pdfConfig = {
+        margin: 10,
+        filename: 'signature.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
 
-    function downloadSignatureAsPDF() {
-        // ... (unchanged)
-    }
+    html2pdf(tempCanvas, pdfConfig);
+}
 
-    // Function to clear the signature canvas
-    function clearSignature() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
+// Function to clear the signature canvas
+function clearSignature() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+// Add this function along with other functions in your script
+function resizeCanvas() {
+    const canvasSize = Math.min(window.innerWidth * 0.8, 400); // Set a maximum size of 400px for the canvas
+    canvas.width = canvasSize;
+    canvas.height = canvasSize;
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
 
-    // Add this event listener to your button (assuming the button has the id "downloadButton")
-    const downloadButton = document.getElementById('downloadButton');
-    if (downloadButton) {
-        downloadButton.addEventListener('click', downloadSignature);
-    }
 function loadManualSignature(input) {
     const file = input.files[0];
 
@@ -144,4 +173,3 @@ function loadManualSignature(input) {
         reader.readAsDataURL(file);
     }
 }
-});
