@@ -1,15 +1,11 @@
-body {
-            background-color: #f0f8ff; /* Light Sky Blue */
-            font-family: 'Arial', sans-serif;
-        }
-
-        .container {
+body.container {
             max-width: 600px;
             margin: auto;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
+            background-color: #f0f8ff; /* Light Sky Blue */
+            font-family: 'Arial', sans-serif;
         }
 
         .signature-container {
