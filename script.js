@@ -77,31 +77,30 @@ function downloadSignatureAsImage(format) {
 
 
 function downloadSignatureAsPDF() {
-    const signatureCanvas = document.getElementById('signatureCanvas');
-    const signatureRect = signatureCanvas.getBoundingClientRect();
+    const signatureRect = canvas.getBoundingClientRect();
 
-    const tempCanvas = document.createElement('canvas');
-    const tempCtx = tempCanvas.getContext('2d');
+    // Use html2canvas to capture the content of the canvas
+    html2canvas(canvas).then((canvas) => {
+        // Create a new jsPDF instance
+        const pdf = new jsPDF('p', 'mm', 'a4'); // Specify the page size as A4
 
-    tempCanvas.width = signatureRect.width;
-    tempCanvas.height = signatureRect.height;
+        // Calculate the aspect ratio to maintain the original dimensions
+        const aspectRatio = signatureRect.width / signatureRect.height;
 
-    const centerX = tempCanvas.width / 2;
-    const centerY = tempCanvas.height / 2;
+        // Set the desired width and height for the image in the PDF
+        const pdfImageWidth = 100; // Set to 100 pixels
+        const pdfImageHeight = pdfImageWidth / aspectRatio;
 
-    tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+        // Calculate the centering position for the image
+        const xOffset = (pdf.internal.pageSize.width - pdfImageWidth) / 2;
+        const yOffset = (pdf.internal.pageSize.height - pdfImageHeight) / 2;
 
-    tempCtx.drawImage(signatureCanvas, centerX - signatureRect.width / 2, centerY - signatureRect.height / 2);
+        // Add the image to the PDF with the specified dimensions
+        pdf.addImage(canvas.toDataURL(), 'JPEG', xOffset, yOffset, pdfImageWidth, pdfImageHeight);
 
-    const pdfConfig = {
-        margin: 10,
-        filename: 'signature.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
-
-    html2pdf(tempCanvas, pdfConfig);
+        // Save the PDF
+        pdf.save('Signature.pdf');
+    });
 }
 
 // Function to clear the signature canvas
