@@ -31,13 +31,11 @@ No installation is required. Simply clone or download the repository and open `i
 
 ## Demo
 
-For a live demo, visit [Digital Signature Tool Demo](#) (replace with your demo link if available).
+For a live demo, visit [Digital Signature Tool Demo](https://shouttolearnorg.github.io/digitalsignature/) (replace with your demo link if available).
 
 ## Contributing
 
 Contributions are welcome! If you have any suggestions, improvements, or bug fixes, feel free to open an issue or submit a pull request.
-
-Please make sure to follow the [Contributing Guidelines](CONTRIBUTING.md).
 
 ## License
 
