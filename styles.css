@@ -1,67 +1,32 @@
-container {
-            max-width: 600px;
-            margin: auto;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            font-family: 'Arial', sans-serif;
-        }
 
-        .signature-container {
-            border: 2px dashed #007bff;
-            border-radius: 8px;
-            padding: 20px;
-        }
 
-        canvas {
-            border-radius: 8px;
-        }
-
-        .form-label {
-            font-weight: bold;
-            color: #007bff;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border: none;
-        }
-
-        .btn-secondary {
-            background-color: #6c757d;
-            border: none;
-        }
-
-        hr {
-            margin: 20px 0;
-            border: none;
-            border-top: 1px solid #ddd;
-        }
-
-        .text-muted a {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
-        }
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .signature-container {
-    border: 1px solid #ccc;
-    overflow: hidden;
-    display: flex; /* Add this line to make it a flex container */
-    justify-content: center; /* Center the canvas horizontally */
-    align-items: center; /* Center the canvas vertically */
+  
+  border: 1px dashed #007bff;
+  border-radius: 8px;
+  padding: 20px;
+  overflow: hidden;
+  display: flex; /* Add this line to make it a flex container */
+  justify-content: center; /* Center the canvas horizontally */
+  align-items: center; /* Center the canvas vertically */
 }
 
 #signatureCanvas {
-    touch-action: none;
-    background-color: white;
-    border: 1px solid #000;
-    display: block; /* Ensure the canvas is a block element */
-    margin: auto; /* Center the canvas within its parent */
+  touch-action: none;
+  background-color: white;
+  border: 1px solid #000;
+  display: block; /* Ensure the canvas is a block element */
+  margin: auto; /* Center the canvas within its parent */
 }
- 
